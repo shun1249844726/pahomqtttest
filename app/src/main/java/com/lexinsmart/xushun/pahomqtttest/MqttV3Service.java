@@ -9,6 +9,7 @@ import android.util.Log;
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -97,13 +98,12 @@ public class MqttV3Service {
 
             mqttAndroidClient.subscribe(subscriptionTopic,qoss);
             // THIS DOES NOT WORK!
-//            mqttAndroidClient.subscribe(subscriptionTopic, 0, new IMqttMessageListener() {
-//                @Override
-//                public void messageArrived(String topic, MqttMessage message) throws Exception {
-//                    // message Arrived!
-//                    System.out.println("Message: " + topic + " : " + new String(message.getPayload()));
-//                }
-//            });
+            mqttAndroidClient.subscribe(subscriptionTopic, qoss, new IMqttMessageListener[]{new IMqttMessageListener() {
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    System.out.println("arrived:"+topic+"\t"+message.toString());
+                }
+            }});
 
         } catch (MqttException ex) {
             System.err.println("Exception whilst subscribing");
