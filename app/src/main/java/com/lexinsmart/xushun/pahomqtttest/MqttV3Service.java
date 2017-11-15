@@ -49,7 +49,7 @@ public class MqttV3Service {
 
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                   System.out.println(TAG+"connect to:!" + serverUri);
+                    System.out.println(TAG + "connect to:!" + serverUri);
 
                     DisconnectedBufferOptions disconnectedBufferOptions = new DisconnectedBufferOptions();
                     disconnectedBufferOptions.setBufferEnabled(true);
@@ -62,7 +62,7 @@ public class MqttV3Service {
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    System.out.println(TAG+"Failed to connect to:!" + serverUri);
+                    System.out.println(TAG + "Failed to connect to:!" + serverUri);
                     exception.printStackTrace();
 
 
@@ -92,18 +92,27 @@ public class MqttV3Service {
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    System.out.println(TAG+"Failed to subscribe!");
+                    System.out.println(TAG + "Failed to subscribe!");
                 }
             });
+//            这个不能用
+//            mqttAndroidClient.subscribe(subscriptionTopic,qoss);
+//            mqttAndroidClient.subscribe(subscriptionTopic, qoss, new IMqttMessageListener[]{new IMqttMessageListener() {
+//                @Override
+//                public void messageArrived(String topic, MqttMessage message) throws Exception {
+//                    System.out.println("arrived:");
+//                }
+//            }});
 
-            mqttAndroidClient.subscribe(subscriptionTopic,qoss);
-            // THIS DOES NOT WORK!
-            mqttAndroidClient.subscribe(subscriptionTopic, qoss, new IMqttMessageListener[]{new IMqttMessageListener() {
-                @Override
-                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    System.out.println("arrived:"+topic+"\t"+message.toString());
-                }
-            }});
+
+//            这个可以用
+//            mqttAndroidClient.subscribe("sd", 1, new IMqttMessageListener() {
+//                @Override
+//                public void messageArrived(String topic, MqttMessage message) throws Exception {
+//                    System.out.println("arrived:");
+//
+//                }
+//            });
 
         } catch (MqttException ex) {
             System.err.println("Exception whilst subscribing");
@@ -118,14 +127,14 @@ public class MqttV3Service {
             MqttMessage message = new MqttMessage();
             message.setPayload(msg.getBytes());
             mqttAndroidClient.publish(topicList.get(position), message);
-            System.out.println(TAG+ "Message Published");
+            System.out.println(TAG + "Message Published");
             successfulFlag = true;
             if (!mqttAndroidClient.isConnected()) {
                 Log.d(TAG, mqttAndroidClient.getBufferedMessageCount() + " messages in buffer.");
             }
         } catch (MqttException e) {
             successfulFlag = false;
-            System.out.println(TAG+ "Error Publishing: " + e.getMessage());
+            System.out.println(TAG + "Error Publishing: " + e.getMessage());
             e.printStackTrace();
         }
 

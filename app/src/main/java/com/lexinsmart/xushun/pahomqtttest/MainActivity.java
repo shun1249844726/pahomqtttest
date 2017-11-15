@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     MqttAndroidClient mqttAndroidClient;
 
-    final String serverUri = "tcp://120.9***1883";
+    final String serverUri = "tcp://120.92.**:1883";
 
 
     String clientId = "xushunpaho";
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 String strContent = "";
                 strContent += msg.getData().getString("content");
 
-                System.out.println(TAG+"strcontent:" + strContent);
+                System.out.println(TAG+" strcontent:" + strContent);
 
             } else if (msg.what == 3) {
                 if (!MqttV3Service.mqttAndroidClient.isConnected()) {

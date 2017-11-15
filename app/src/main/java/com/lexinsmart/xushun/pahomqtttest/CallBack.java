@@ -37,17 +37,17 @@ public class CallBack implements MqttCallbackExtended {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-//		try {
-//			System.out.println("MQTT:message:"+message.toString());
-//			Message msg = Message.obtain();
-//			Bundle bundle = new Bundle();
-//			bundle.putString("content", message.toString());
-//			msg.what = 2;
-//			msg.setData(bundle);
-//			handler.sendMessage(msg);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			System.out.println("MQTT:message:"+message.toString());
+			Message msg = Message.obtain();
+			Bundle bundle = new Bundle();
+			bundle.putString("content", message.toString());
+			msg.what = 2;
+			msg.setData(bundle);
+			handler.sendMessage(msg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
